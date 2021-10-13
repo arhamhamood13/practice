@@ -1,32 +1,56 @@
-# Python/Flask Tutorial for Visual Studio Code
+<div align='center'>
+    <h1>Calculadora Tk</h1>
+    <img src='./demo/demo.gif' title='Demo da calculadora' width='340px' />
+</div>
 
-* This sample contains the completed program from the tutorial, make sure to visit the link: [Using Flask in Visual Studio Code](https://code.visualstudio.com/docs/python/tutorial-flask). Intermediate steps are not included.
+## Motivação
+O projeto tem por objetivo incentivar iniciantes na programação em python a contríbuir com projetos open source que vão além do Terminal, de modo que seja mais visual o desenvolvimento. 
 
-* It also contains the *Dockerfile* and *uwsgi.ini* files necessary to build a container with a production server. The resulting image works both locally and when deployed to Azure App Service. See [Deploy Python using Docker containers](https://code.visualstudio.com/docs/python/tutorial-deploy-containers).
+Sendo assim, foi criado a Calculadora Tk com funcionalidades matemáticas básicas e com alguns erros propositais para que as correções e ampliações de novas funcionalidades sejam feitas pelo público alvo (Iniciantes).
 
-* To run the app locally:
-  1. Run the command `cd hello_app`, to change into the folder that contains the Flask app.
-  1. Run the command `set FLASK_APP=webapp` (Windows cmd) or `FLASK_APP=webapp` (macOS/Linux) to point to the app module.
-  1. Start the Flask server with `flask run`.
+## Para contribuir
+Siga os passos abaixo:
 
-## The startup.py file
+1. Faça o `Fork` do projeto [Calculadora Tk](<https://github.com/matheusfelipeog/calculadora-tk.git>) no canto superior direito da tela;
+2. Clone o projeto do seu repositório no github (`git clone https://github.com/SEU_USUARIO/calculadora-tk.git`);
+3. Crie sua branch para realizar sua modificação (`git checkout -b feature/nome_da_modificação`);
+4. Após ter realizado suas modificações, faça um `commit` (`git commit -m "Descrição da modificação"`);
+5. Faça o `Push` para seu repositório (`git push origin feature/nome_modificação`);
+6. No seu repositório no *Github* crie uma `Pull Request` para que seja avaliada a suas modificações para ser feito o `merge` no projeto principal.
 
-In the root folder, the `startup.py` file is specifically for deploying to Azure App Service on Linux without using a containerized version of the app (that is, deploying the code directly, not as a container).
+## Contribuidores
 
-Because the app code is in its own *module* in the `hello_app` folder (which has an `__init__.py`), trying to start the Gunicorn server within App Service on Linux produces an "Attempted relative import in non-package" error.
+| [<img src="https://avatars2.githubusercontent.com/u/25591464?s=115" /><br /><sub>@aguiarcandre</sub>](https://github.com/aguiarcandre) | [<img src="https://avatars2.githubusercontent.com/u/52337966?s=115" /><br /><sub>@carlos3g</sub>](https://github.com/carlos3g) | [<img src="https://avatars0.githubusercontent.com/u/67281981?s=115" /><br /><sub>@ericllma</sub>](https://github.com/ericllma) | [<img src="https://avatars0.githubusercontent.com/u/61357388?s=115" /><br /><sub>@sam-chami</sub>](https://github.com/sam-chami) | [<img src="https://avatars1.githubusercontent.com/u/64209523?s=115" /><br /><sub>@taisbferreira</sub>](https://github.com/taisbferreira) |
+|:-:|:-:|:-:|:-:|:-:|
 
-The `startup.py` file, therefore, is a shim to import the app object from the `hello_app` module, which then allows you to use startup:app in the Gunicorn command line (see `startup.txt`).
+## Para ideias/Bugs
+Caso encontre algum bug rie uma `issue` descrevendo o Bug encontrado que tem que ser resolvido, informando o passo a passo para replicá-lo.
 
-## Contributing
+E caso tenha alguma ideia de nova funcionalidade que possa ser implementada por outros iniciantes, crie uma `issue` descrevendo essa ideia. ;)
 
-Contributions to the sample are welcome. When submitting changes, also consider submitting matching changes to the tutorial, the source file for which is [tutorial-flask.md](https://github.com/Microsoft/vscode-docs/blob/master/docs/python/tutorial-flask.md).
+## Start
+```
+$ python main.py
+```
 
-Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
+ou crie seu próprio arquivo com o seguinte script, e depois siga o procedimento acima com o nome correspondente:
+```Python
+# -*- coding: utf-8 -*-
 
-When you submit a pull request, a CLA-bot automatically determines whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+# Builtin
+import tkinter as tk
 
-## Additional details
+# Internal module
+from app.calculadora import Calculadora
 
-* This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-* For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-* Contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+if __name__ == '__main__':
+    master = tk.Tk()
+    main = Calculadora(master)
+    main.start()
+```
+
+## Guias
+- Tkinter: [Documentação](https://docs.python.org/3/library/tkinter.html) - *Existe diversos outros guias em mostra logo no ínicio do página*
+- Git e Github: [Tutorial no Tableless](https://tableless.com.br/tudo-que-voce-queria-saber-sobre-git-e-github-mas-tinha-vergonha-de-perguntar/) - *Leitura*
+- Git e Github: [Tutorial no Youtube](https://www.youtube.com/playlist?list=PLQCmSnNFVYnRdgxOC_ufH58NxlmM6VYd1) - *Vídeo Aula*
+- Pull Request no GitHub: [Tutorial DigitalOcean](https://www.digitalocean.com/community/tutorials/como-criar-um-pull-request-no-github-pt) - *Leitura*
