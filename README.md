@@ -1,56 +1,69 @@
-<div align='center'>
-    <h1>Calculadora Tk</h1>
-    <img src='./demo/demo.gif' title='Demo da calculadora' width='340px' />
-</div>
+<a href="https://raalabs.com/">
+    <img src=docs/source/raalabs-logo-blue-yellow-RGB.png
+    alt="Raa Labs" title="Raa Labs" align="right" height="40" />
+</a>
 
-## Motivação
-O projeto tem por objetivo incentivar iniciantes na programação em python a contríbuir com projetos open source que vão além do Terminal, de modo que seja mais visual o desenvolvimento. 
+# TSIClient
+[![build](https://github.com/RaaLabs/TSIClient/workflows/Python%20CI/badge.svg)](https://github.com/RaaLabs/TSIClient/actions)
+[![Documentation Status](https://readthedocs.org/projects/raalabs-tsiclient/badge/?version=latest)](https://raalabs-tsiclient.readthedocs.io/en/latest/?badge=latest)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=RaaLabs_TSIClient&metric=coverage)](https://sonarcloud.io/dashboard?id=RaaLabs_TSIClient)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=RaaLabs_TSIClient&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=RaaLabs_TSIClient)
+[![PyPI version](https://badge.fury.io/py/TSIClient.svg)](https://badge.fury.io/py/TSIClient)
+[![Downloads](https://pepy.tech/badge/tsiclient/month)](https://pepy.tech/project/tsiclient)
 
-Sendo assim, foi criado a Calculadora Tk com funcionalidades matemáticas básicas e com alguns erros propositais para que as correções e ampliações de novas funcionalidades sejam feitas pelo público alvo (Iniciantes).
+The TSIClient is a Python SDK for Microsoft Azure time series insights. It provides methods to conveniently retrieve your data and is designed
+for analysts, data scientists and developers working with time series data in Azure TSI.
 
-## Para contribuir
-Siga os passos abaixo:
+## Documentation
+- Azure time series REST APIs: <https://docs.microsoft.com/en-us/rest/api/time-series-insights/>
+- TSIClient: <https://raalabs-tsiclient.readthedocs.io/en/latest/>
 
-1. Faça o `Fork` do projeto [Calculadora Tk](<https://github.com/matheusfelipeog/calculadora-tk.git>) no canto superior direito da tela;
-2. Clone o projeto do seu repositório no github (`git clone https://github.com/SEU_USUARIO/calculadora-tk.git`);
-3. Crie sua branch para realizar sua modificação (`git checkout -b feature/nome_da_modificação`);
-4. Após ter realizado suas modificações, faça um `commit` (`git commit -m "Descrição da modificação"`);
-5. Faça o `Push` para seu repositório (`git push origin feature/nome_modificação`);
-6. No seu repositório no *Github* crie uma `Pull Request` para que seja avaliada a suas modificações para ser feito o `merge` no projeto principal.
+## Installation
+We recommended to use a Python version >= 3.6. You can install the TSIClient from PyPi:
+````bash
+pip install TSIClient
+````
+Or if you want to get the latest code, directly fom GitHub:
 
-## Contribuidores
+````bash
+pip install git+https://github.com/RaaLabs/TSIClient.git
+````
+## Quickstart
+Instantiate the TSIClient to query your TSI environment. Log in to Azure using the Azure CLI:
+````bash
+az login --tenant <your-azure-tenant-id>
+````
 
-| [<img src="https://avatars2.githubusercontent.com/u/25591464?s=115" /><br /><sub>@aguiarcandre</sub>](https://github.com/aguiarcandre) | [<img src="https://avatars2.githubusercontent.com/u/52337966?s=115" /><br /><sub>@carlos3g</sub>](https://github.com/carlos3g) | [<img src="https://avatars0.githubusercontent.com/u/67281981?s=115" /><br /><sub>@ericllma</sub>](https://github.com/ericllma) | [<img src="https://avatars0.githubusercontent.com/u/61357388?s=115" /><br /><sub>@sam-chami</sub>](https://github.com/sam-chami) | [<img src="https://avatars1.githubusercontent.com/u/64209523?s=115" /><br /><sub>@taisbferreira</sub>](https://github.com/taisbferreira) |
-|:-:|:-:|:-:|:-:|:-:|
+Now instantiate the client like this:
 
-## Para ideias/Bugs
-Caso encontre algum bug rie uma `issue` descrevendo o Bug encontrado que tem que ser resolvido, informando o passo a passo para replicá-lo.
+````python
+from TSIClient import TSIClient as tsi
 
-E caso tenha alguma ideia de nova funcionalidade que possa ser implementada por outros iniciantes, crie uma `issue` descrevendo essa ideia. ;)
+client = tsi.TSIClient(
+    enviroment="<your-tsi-env-name>",
+    applicationName="<your-app-name>"
+)
+````
 
-## Start
-```
-$ python main.py
-```
+You can check the docs at <https://raalabs-tsiclient.readthedocs.io/en/latest/authentication.html> for more information on authentication, and check
+the old way of authentication (these will be removed in a future version).
 
-ou crie seu próprio arquivo com o seguinte script, e depois siga o procedimento acima com o nome correspondente:
-```Python
-# -*- coding: utf-8 -*-
+You can query your timeseries data by timeseries id, timeseries name or timeseries description. The Microsoft TSI apis support aggregation, so you can specify a sampling freqency and aggregation methods. Refer to the documentation for detailed information.
 
-# Builtin
-import tkinter as tk
+````python
+data = client.query.getDataById(
+    timeseries=["timeseries_id1", "timeseries_id2"],
+    timespan=["2019-12-12T15:35:11.68Z", "2019-12-12T17:02:05.958Z"],
+    interval="PT5M",
+    aggregateList=["avg", "max"],
+    useWarmStore=False
+)
+````
 
-# Internal module
-from app.calculadora import Calculadora
+This returns a pandas dataframe, which can be used for analysis.
 
-if __name__ == '__main__':
-    master = tk.Tk()
-    main = Calculadora(master)
-    main.start()
-```
+## Contributing
+Contributions are welcome. See the [developer reference](docs/source/developer.rst) for details.
 
-## Guias
-- Tkinter: [Documentação](https://docs.python.org/3/library/tkinter.html) - *Existe diversos outros guias em mostra logo no ínicio do página*
-- Git e Github: [Tutorial no Tableless](https://tableless.com.br/tudo-que-voce-queria-saber-sobre-git-e-github-mas-tinha-vergonha-de-perguntar/) - *Leitura*
-- Git e Github: [Tutorial no Youtube](https://www.youtube.com/playlist?list=PLQCmSnNFVYnRdgxOC_ufH58NxlmM6VYd1) - *Vídeo Aula*
-- Pull Request no GitHub: [Tutorial DigitalOcean](https://www.digitalocean.com/community/tutorials/como-criar-um-pull-request-no-github-pt) - *Leitura*
+## License
+TSIClient is licensed under the MIT license. See [LICENSE](LICENSE.txt) file for details.
