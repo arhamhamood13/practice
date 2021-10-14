@@ -32,7 +32,7 @@ steps:
   displayName: 'pytest'
 
 - script: |    
-    python setup.py sdist 
+    python setup.py sdist --formats=gztar,zip
   displayName: 'Artifact creation'
 
 - task: CopyFiles@2  
