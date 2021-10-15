@@ -44,3 +44,11 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'                  
     ArtifactName: 'dist'    
     publishLocation: 'Container'
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'dist'
+    downloadPath: '$(Build.ArtifactStagingDirectory)'
+  
+
