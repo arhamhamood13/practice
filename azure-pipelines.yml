@@ -43,12 +43,10 @@ steps:
   inputs:    
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'                  
     ArtifactName: 'dist'    
-    publishLocation: 'Container'
-- task: DownloadBuildArtifacts@1
+    publishLocation: 'Container'  
+- task: DownloadPipelineArtifact@2
   inputs:
     buildType: 'current'
-    downloadType: 'single'
     artifactName: 'dist'
-    downloadPath: '$(Build.ArtifactStagingDirectory)'
-  
+    targetPath: '$(Pipeline.Workspace)'
 
